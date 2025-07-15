@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option go_package = "aresdata/api/aresdata/v1;v1";
+
+package aresdata.api.aresdata.v1;
+
+
+
+import "google/api/annotations.proto";
+import "api/aresdata/v1/task.proto";
+import "api/aresdata/v1/source_data.proto";
+
+service Fetcher {
+  // 采集并存储
+  rpc FetchAndStore(FetchAndStoreRequest) returns (FetchAndStoreReply) {
+    option (google.api.http) = {
+      post: "/v1/fetch"
+      body: "*"
+    };
+  }
+}
+
+message FetchAndStoreRequest {
+  Task task = 1;
+}
+
+message FetchAndStoreReply {
+  SourceData saved_data = 1;
+}
